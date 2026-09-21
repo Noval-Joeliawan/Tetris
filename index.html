@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Game Tetris</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="menu-screen">
+      <div class="menu-card">
+        <h1>TETRIS</h1>
+
+        <div class="guide-selection">
+          <button class="btn-guide" onclick="showPopup('hp')">
+            📱 Cara Main di HP
+          </button>
+          <button class="btn-guide" onclick="showPopup('pc')">
+            💻 Cara Main di PC
+          </button>
+        </div>
+
+        <button
+          class="btn-neon"
+          style="
+            width: 100%;
+            background: linear-gradient(135deg, #ff007f, #b026ff);
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+          "
+          onclick="startGame()"
+        >
+          Mulai Game
+        </button>
+      </div>
+    </div>
+
+    <div id="popup-guide" class="popup-overlay" onclick="closePopup()">
+      <div class="popup-content" onclick="event.stopPropagation()">
+        <h3 id="popup-title">Panduan Bermain</h3>
+        <div id="popup-text" class="popup-text"></div>
+        <button
+          class="btn-neon"
+          style="
+            width: 100%;
+            padding: 8px 0;
+            font-size: 12px;
+            border-radius: 10px;
+          "
+          onclick="closePopup()"
+        >
+          Mengerti
+        </button>
+      </div>
+    </div>
+
+    <h1 id="game-title" style="display: none">TETRIS</h1>
+
+    <div class="game-container" id="main-game">
+      <div class="sidebar">
+        <div class="info-box">
+          <div class="info-label">Tahan</div>
+          <canvas id="canvas-hold" width="80" height="80"></canvas>
+        </div>
+        <div class="info-box">
+          <div class="info-label">Skor</div>
+          <div id="score" class="info-value">0</div>
+        </div>
+        <div class="btn-pause-wrapper">
+          <button class="btn-pause-game" onclick="togglePause()">
+            ⏸ PAUSE
+          </button>
+        </div>
+      </div>
+
+      <div class="canvas-wrapper">
+        <canvas id="tetris" width="240" height="400"></canvas>
+
+        <div id="pause-overlay" class="overlay">
+          <div class="overlay-title">PAUSED</div>
+          <button class="btn-neon" onclick="togglePause()">LANJUT</button>
+          <button class="btn-neon btn-secondary" onclick="backToMenu()">
+            MENU AWAL
+          </button>
+        </div>
+
+        <div id="game-over-overlay" class="overlay">
+          <div class="overlay-title game-over">GAME OVER</div>
+          <div
+            id="final-score"
+            class="overlay-score"
+            style="
+              font-size: 14px;
+              color: #94a3b8;
+              text-align: center;
+              width: 100%;
+            "
+          >
+            Skor: 0
+          </div>
+          <button class="btn-neon" onclick="resetGame()">MAIN LAGI</button>
+          <button class="btn-neon btn-secondary" onclick="backToMenu()">
+            MENU AWAL
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="info-box">
+          <div class="info-label">Berikutnya</div>
+          <canvas id="canvas-next" width="80" height="80"></canvas>
+        </div>
+        <div class="info-box">
+          <div class="info-label">Rekor</div>
+          <div id="high-score" class="info-value">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="instructions" id="game-rules" style="display: none">
+      <strong>KONTROL PC:</strong> ← / → : Geser | ↑ : Putar | ↓ : Turun |
+      <strong>C</strong> : Tahan | <strong>SPACE</strong> : Hard Drop
+    </div>
+
+    <div class="mobile-controls" id="mobile-pads" style="display: none">
+      <div class="m-btn" id="btn-hold">HOLD</div>
+      <div class="m-btn" id="btn-rotate">↻</div>
+      <div class="m-btn" id="btn-drop">DROP</div>
+      <div class="m-btn" id="btn-left">←</div>
+      <div class="m-btn" id="btn-down">↓</div>
+      <div class="m-btn" id="btn-right">→</div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

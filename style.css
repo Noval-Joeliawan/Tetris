@@ -1,0 +1,400 @@
+body {
+  background: linear-gradient(-45deg, #0f1123, #15102a, #0b0d19, #1a1025);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #fff;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  touch-action: none;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+h1 {
+  margin: 5px 0 10px 0;
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  background: linear-gradient(45deg, #00f0ff, #ff007f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+#menu-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(7, 9, 19, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.menu-card {
+  background: rgba(25, 30, 56, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 30px 25px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.guide-selection {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 25px 0;
+}
+.btn-guide {
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  flex: 1;
+  transition: all 0.2s ease;
+}
+.btn-guide:active {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: #00f0ff;
+  color: #00f0ff;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(5, 7, 15, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.popup-content {
+  background: #13172e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  padding: 25px;
+  border-radius: 20px;
+  max-width: 300px;
+  width: 100%;
+  text-align: left;
+}
+.popup-content h3 {
+  margin-top: 0;
+  color: #00f0ff;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 10px;
+}
+.popup-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #cbd5e1;
+  margin: 18px 0;
+}
+.popup-text strong {
+  color: #00f0ff;
+}
+.popup-text.pc-text strong {
+  color: #ff007f;
+}
+
+.game-container {
+  display: none;
+  gap: 15px;
+  background: rgba(20, 24, 45, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 15px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100px;
+}
+.info-box {
+  background: rgba(5, 7, 15, 0.6);
+  padding: 10px 8px;
+  border-radius: 14px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info-label {
+  font-size: 9px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+.info-value {
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+}
+#score {
+  color: #ff007f;
+  text-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
+}
+#high-score {
+  color: #b026ff;
+  text-shadow: 0 0 10px rgba(176, 38, 255, 0.4);
+}
+
+.canvas-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+canvas {
+  border: solid 2px rgba(255, 255, 255, 0.1);
+  background-color: rgba(5, 7, 15, 0.85);
+  border-radius: 16px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+  max-width: 100%;
+  max-height: 42vh;
+  height: auto;
+}
+#canvas-next,
+#canvas-hold {
+  background-color: rgba(5, 7, 15, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  margin-top: 4px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(7, 9, 19, 0.95);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  z-index: 10;
+  text-align: center;
+}
+.overlay-title {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #00f0ff;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+  margin-bottom: 5px;
+  text-align: center;
+  width: 100%;
+}
+.overlay-title.game-over {
+  color: #ff0055;
+  text-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+  text-align: center;
+}
+
+.btn-neon {
+  background: linear-gradient(135deg, #00f0ff, #0077ff);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+  width: 140px;
+  text-align: center;
+  transition: transform 0.1s ease;
+}
+.btn-neon:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
+.btn-neon.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+.btn-neon.btn-secondary:active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.btn-pause-game {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  padding: 8px 4px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  width: 100%;
+}
+.btn-pause-game:active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-controls {
+  display: none;
+  width: 100%;
+  max-width: 340px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 0;
+  box-sizing: border-box;
+}
+.m-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 24px;
+  font-weight: bold;
+  height: 54px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.m-btn:active {
+  background: #00f0ff;
+  color: #070913;
+  border-color: #00f0ff;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+}
+#btn-hold,
+#btn-drop {
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.05);
+  color: #a4b3c6;
+}
+#btn-hold:active,
+#btn-drop:active {
+  background: #ff007f;
+  color: #fff;
+  border-color: #ff007f;
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+}
+
+.instructions {
+  margin-top: 10px;
+  font-size: 11px;
+  color: #64748b;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.8rem;
+    margin: 5px 0 5px 0;
+  }
+  body {
+    padding: 5px 10px 15px 10px;
+    justify-content: flex-start;
+  }
+
+  .game-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .info-box {
+    flex: 1;
+    padding: 6px 4px;
+    border-radius: 10px;
+  }
+  .btn-pause-wrapper {
+    display: flex;
+    align-items: center;
+    width: 75px;
+  }
+
+  canvas {
+    max-height: 38vh;
+  }
+
+  .instructions {
+    display: none;
+  }
+  .mobile-controls {
+    display: grid;
+  }
+}
