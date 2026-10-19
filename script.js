@@ -10,15 +10,16 @@ const canvasHold = document.getElementById("canvas-hold");
 const contextHold = canvasHold.getContext("2d");
 contextHold.scale(20, 20);
 
+// Palet Warna Taktil Retro Brick (Menggantikan palet neon lama)
 const colors = [
   null,
-  { main: "#ff0055", light: "#ff5599", dark: "#990033" },
-  { main: "#00f0ff", light: "#55f5ff", dark: "#0099aa" },
-  { main: "#22ff00", light: "#77ff55", dark: "#119900" },
-  { main: "#ffcc00", light: "#ffea77", dark: "#aa8800" },
-  { main: "#ff7700", light: "#ffaa55", dark: "#aa4400" },
-  { main: "#b026ff", light: "#d380ff", dark: "#6600aa" },
-  { main: "#0033ff", light: "#5577ff", dark: "#0011aa" },
+  { main: "#a855f7", light: "#d8b4fe", dark: "#6b21a8" }, // T - Ungu Retro
+  { main: "#eab308", light: "#fef08a", dark: "#a16207" }, // O - Kuning Mustard
+  { main: "#f97316", light: "#fdba74", dark: "#c2410c" }, // L - Oranye Taktil
+  { main: "#3b82f6", light: "#93c5fd", dark: "#1d4ed8" }, // J - Biru Kobalt
+  { main: "#06b6d4", light: "#67e8f9", dark: "#0e7490" }, // I - Cyan Cerah
+  { main: "#22c55e", light: "#86efac", dark: "#15803d" }, // S - Hijau Zamrud
+  { main: "#ef4444", light: "#fca5a5", dark: "#b91c1c" }, // Z - Merah Koral
 ];
 
 let dropCounter = 0;
@@ -46,12 +47,12 @@ function showPopup(type) {
     title.innerText = "KONTROL LAYAR HP";
     text.className = "popup-text";
     text.innerHTML = `
-            • <strong>← / →</strong> : Geser Kiri / Kanan<br>
-            • <strong>↻ (Atas Tengah)</strong> : Putar Balok<br>
-            • <strong>↓</strong> : Turun Lebih Cepat<br>
+            • <strong>◀ / ▶</strong> : Geser Kiri / Kanan<br>
+            • <strong>↻ PUTAR</strong> : Putar Balok<br>
+            • <strong>▼</strong> : Turun Lebih Cepat<br>
             • <strong>DROP</strong> : Jatuh Instan (Hard Drop)<br>
             • <strong>HOLD</strong> : Simpan Balok Cadangan<br>
-            • <strong>PAUSE</strong> : Jeda Game / Menu
+            • <strong>JEDA</strong> : Jeda Game / Menu
         `;
   } else {
     title.innerText = "KONTROL KEYBOARD PC";
@@ -73,8 +74,8 @@ function closePopup() {
 }
 
 function drawGrid() {
-  context.strokeStyle = "rgba(255, 255, 255, 0.04)";
-  context.lineWidth = 0.05;
+  context.strokeStyle = "rgba(255, 255, 255, 0.05)";
+  context.lineWidth = 0.04;
   for (let x = 0; x < 12; x++) {
     context.beginPath();
     context.moveTo(x, 0);
@@ -89,24 +90,35 @@ function drawGrid() {
   }
 }
 
+// Render balok bergaya mainan fisik / konsol retro
 function drawBlock(x, y, value, ctx = context) {
   const color = colors[value];
   if (!color) return;
 
+  // Warna dasar balok
   ctx.fillStyle = color.main;
   ctx.fillRect(x, y, 1, 1);
 
+  // Highlight Bevel Atas & Kiri
   ctx.fillStyle = color.light;
-  ctx.fillRect(x, y, 1, 0.08);
-  ctx.fillRect(x, y, 0.08, 1);
+  ctx.fillRect(x, y, 1, 0.12);
+  ctx.fillRect(x, y, 0.12, 1);
 
+  // Bayangan Bevel Bawah & Kanan
   ctx.fillStyle = color.dark;
-  ctx.fillRect(x, y + 0.92, 1, 0.08);
-  ctx.fillRect(x + 0.92, y, 0.08, 1);
+  ctx.fillRect(x, y + 0.88, 1, 0.12);
+  ctx.fillRect(x + 0.88, y, 0.12, 1);
 
-  ctx.strokeStyle = "rgba(7, 9, 19, 0.5)";
-  ctx.lineWidth = 0.04;
-  ctx.strokeRect(x, y, 1, 1);
+  // Detail kepingan tengah (Stud Taktil)
+  ctx.fillStyle = color.dark;
+  ctx.fillRect(x + 0.28, y + 0.28, 0.44, 0.44);
+  ctx.fillStyle = color.main;
+  ctx.fillRect(x + 0.33, y + 0.33, 0.34, 0.34);
+
+  // Garis tepi hitam tegas antar-balok
+  ctx.strokeStyle = "#18181b";
+  ctx.lineWidth = 0.06;
+  ctx.strokeRect(x + 0.03, y + 0.03, 0.94, 0.94);
 }
 
 function arenaSweep() {
@@ -215,7 +227,7 @@ function drawGhost() {
   }
   ghost.pos.y--;
 
-  context.globalAlpha = 0.12;
+  context.globalAlpha = 0.22;
   drawMatrix(ghost.matrix, ghost.pos);
   context.globalAlpha = 1.0;
 }

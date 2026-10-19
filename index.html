@@ -6,62 +6,70 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Game Tetris</title>
+    <title>BRICK-BOY // Game Tetris</title>
+    <!-- Google Fonts: Press Start 2P & Chakra Petch untuk nuansa konsol genggam -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- LAYAR MENU AWAL -->
     <div id="menu-screen">
       <div class="menu-card">
-        <h1>TETRIS</h1>
+        <div class="console-header-strip">
+          <span class="led-dot"></span>
+          <span class="console-model">POCKET SYSTEM // MODEL-89</span>
+        </div>
+
+        <div class="title-screen-box">
+          <h1>TETRIS</h1>
+          <p class="subtitle-tag">EDISI KONSOL TAKTIL</p>
+        </div>
 
         <div class="guide-selection">
           <button class="btn-guide" onclick="showPopup('hp')">
-            📱 Cara Main di HP
+            📱 Panduan HP
           </button>
           <button class="btn-guide" onclick="showPopup('pc')">
-            💻 Cara Main di PC
+            ⌨️ Panduan PC
           </button>
         </div>
 
-        <button
-          class="btn-neon"
-          style="
-            width: 100%;
-            background: linear-gradient(135deg, #ff007f, #b026ff);
-            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
-          "
-          onclick="startGame()"
-        >
-          Mulai Game
+        <button class="btn-neon btn-start-main" onclick="startGame()">
+          ▶ MULAI PERMAINAN
         </button>
+
+        <div class="speaker-grill" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span
+          ><span></span>
+        </div>
       </div>
     </div>
 
+    <!-- POPUP PANDUAN -->
     <div id="popup-guide" class="popup-overlay" onclick="closePopup()">
       <div class="popup-content" onclick="event.stopPropagation()">
         <h3 id="popup-title">Panduan Bermain</h3>
         <div id="popup-text" class="popup-text"></div>
-        <button
-          class="btn-neon"
-          style="
-            width: 100%;
-            padding: 8px 0;
-            font-size: 12px;
-            border-radius: 10px;
-          "
-          onclick="closePopup()"
-        >
-          Mengerti
+        <button class="btn-neon btn-full" onclick="closePopup()">
+          MENGERTI
         </button>
       </div>
     </div>
 
-    <h1 id="game-title" style="display: none">TETRIS</h1>
+    <!-- HEADER KONSOL SAAT BERMAIN -->
+    <h1 id="game-title" style="display: none">TETRIS POCKET</h1>
 
+    <!-- CONTAINER UTAMA PERMAINAN -->
     <div class="game-container" id="main-game">
+      <!-- Panel Kiri (Atau Baris Atas di HP) -->
       <div class="sidebar">
         <div class="info-box">
-          <div class="info-label">Tahan</div>
+          <div class="info-label">Tahan (Hold)</div>
           <canvas id="canvas-hold" width="80" height="80"></canvas>
         </div>
         <div class="info-box">
@@ -69,37 +77,32 @@
           <div id="score" class="info-value">0</div>
         </div>
         <div class="btn-pause-wrapper">
-          <button class="btn-pause-game" onclick="togglePause()">
-            ⏸ PAUSE
-          </button>
+          <button class="btn-pause-game" onclick="togglePause()">⏸ JEDA</button>
         </div>
       </div>
 
+      <!-- Bingkai Layar Utama -->
       <div class="canvas-wrapper">
+        <div class="bezel-top-label">
+          <span class="led-indicator">● BATERAI</span>
+          <span>DOT MATRIX DISPLAY</span>
+        </div>
+
         <canvas id="tetris" width="240" height="400"></canvas>
 
+        <!-- Overlay Pause -->
         <div id="pause-overlay" class="overlay">
-          <div class="overlay-title">PAUSED</div>
-          <button class="btn-neon" onclick="togglePause()">LANJUT</button>
+          <div class="overlay-title">JEDA GAME</div>
+          <button class="btn-neon" onclick="togglePause()">LANJUTKAN</button>
           <button class="btn-neon btn-secondary" onclick="backToMenu()">
             MENU AWAL
           </button>
         </div>
 
+        <!-- Overlay Game Over -->
         <div id="game-over-overlay" class="overlay">
           <div class="overlay-title game-over">GAME OVER</div>
-          <div
-            id="final-score"
-            class="overlay-score"
-            style="
-              font-size: 14px;
-              color: #94a3b8;
-              text-align: center;
-              width: 100%;
-            "
-          >
-            Skor: 0
-          </div>
+          <div id="final-score" class="overlay-score">Skor: 0</div>
           <button class="btn-neon" onclick="resetGame()">MAIN LAGI</button>
           <button class="btn-neon btn-secondary" onclick="backToMenu()">
             MENU AWAL
@@ -107,6 +110,7 @@
         </div>
       </div>
 
+      <!-- Panel Kanan (Atau Baris Kedua di HP) -->
       <div class="sidebar">
         <div class="info-box">
           <div class="info-label">Berikutnya</div>
@@ -119,19 +123,23 @@
       </div>
     </div>
 
+    <!-- Petunjuk Keyboard PC -->
     <div class="instructions" id="game-rules" style="display: none">
       <strong>KONTROL PC:</strong> ← / → : Geser | ↑ : Putar | ↓ : Turun |
-      <strong>C</strong> : Tahan | <strong>SPACE</strong> : Hard Drop
+      <strong>C / SHIFT</strong> : Tahan | <strong>SPACE</strong> : Jatuh Instan
+      | <strong>P</strong> : Jeda
     </div>
 
+    <!-- Tombol Fisik Layar Sentuh HP -->
     <div class="mobile-controls" id="mobile-pads" style="display: none">
-      <div class="m-btn" id="btn-hold">HOLD</div>
-      <div class="m-btn" id="btn-rotate">↻</div>
-      <div class="m-btn" id="btn-drop">DROP</div>
-      <div class="m-btn" id="btn-left">←</div>
-      <div class="m-btn" id="btn-down">↓</div>
-      <div class="m-btn" id="btn-right">→</div>
+      <div class="m-btn btn-action-teal" id="btn-hold">HOLD</div>
+      <div class="m-btn btn-action-yellow" id="btn-rotate">↻ PUTAR</div>
+      <div class="m-btn btn-action-red" id="btn-drop">DROP</div>
+      <div class="m-btn btn-dpad" id="btn-left">◀</div>
+      <div class="m-btn btn-dpad" id="btn-down">▼</div>
+      <div class="m-btn btn-dpad" id="btn-right">▶</div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
